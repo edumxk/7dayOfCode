@@ -13,16 +13,12 @@ class Controller{
 
     public static function render($page)
     {
-        $content = View::render_view($page);
-        switch (is_file($content)):
-            case true:
-                $content = file_get_contents(VIEW_FOLDER.$page);
-                break;
-            case false:
-                $content = file_get_contents(Controller::do_not_found());
-                break;
-        endswitch;
-        echo $content;
+        if(is_file(View::render_view($page))){
+            echo file_get_contents(VIEW_FOLDER.$page);
+            return;
+        }
+        echo file_get_contents(Controller::do_not_found());
+        return;
     }
 }
 
