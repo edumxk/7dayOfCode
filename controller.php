@@ -1,26 +1,29 @@
 <?php
 
-class Controller{
-    public static function do_register(){
-        return '101';
-    }
-    public static function do_login(){
-        return '100';
-    }
-    public static function do_not_found(){
-        return VIEW_FOLDER.'not_found.view';
-    }
-
-    public static function render($page)
-    {
-        if(is_file(View::render_view($page))){
-            echo file_get_contents(VIEW_FOLDER.$page);
-            return;
-        }
-        echo file_get_contents(Controller::do_not_found());
-        return;
+function do_register()
+{
+    if($_POST['person']??false){
+        unset($_POST['person']['password-confirm']);
+        crud_create($_POST['person']);
+        header("Location: /?page=login");
+    } else {
+        render_view('register');
     }
 }
 
+function do_login()
+{
+    render_view('login');
+}
 
+function do_not_found()
+{
+    http_response_code(404);
+    render_view('not_found');
+}
+
+function do_forget_password()
+{
+    render_view('forget_password');
+}
 

@@ -1,7 +1,7 @@
 <?php
-    class View{
-        public static function render_view($page){
-            return VIEW_FOLDER.$page;
-        }
+
+    function render_view($template){
+        $content = file_get_contents(VIEW_FOLDER."$template.view");
+        echo $content;
     }
 
